@@ -10,7 +10,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
   CLUSTER_NAME: "dev-k8s"
   ENVIRONMENT: "dev"
-  ECR_REPO: "nginx"
+  ECR_REPOSITORY: "nginx"
   AWS_DEFAULT_REGION: "us-east-1"
   AWS_PIPELINE_ROLE: ${{ secrets.AWS_PIPELINE_ROLE }}
   AWS_REGISTRY_URL: ${{ secrets.AWS_REGISTRY_URL }}
