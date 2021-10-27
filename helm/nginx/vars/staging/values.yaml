@@ -1,0 +1,14 @@
+#staging specific values
+environment: staging
+
+serviceAccount:
+  create: false
+  name: nginx
+  annotations:
+    eks.amazonaws.com/role-arn: ""
+
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80

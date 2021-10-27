@@ -1,0 +1,18 @@
+# Define deployment environments
+environments:
+  dev:
+  staging:
+
+helmDefaults:
+  createNamespace: false
+  wait: true
+releases:
+- name: nginx
+  namespace: default
+  chart: .
+  values:
+    - values.yaml
+    - ./vars/{{ .Environment.Name }}/values.yaml
+  set:
+    - name: image.tag
+      value: {{ requiredEnv "IMAGE_TAG" | quote }}

@@ -1,0 +1,90 @@
+# Default values for core-platform-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+containerPort: 80
+
+replicaCount: 1
+
+image:
+  repository: "nginx"
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+automountServiceAccountToken: true
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: NodePort
+  port: 80
+
+ingress:
+  enabled: true
+  paths:
+    - /
+
+resources:
+  limits:
+    cpu: 256m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+autoscaling:
+  enabled: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Global environment variables
+env:
+
+
+healthchecks:
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 2
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    successThreshold: 3
+    timeoutSeconds: 2
+    httpGet:
+      path: /
+      port: http
