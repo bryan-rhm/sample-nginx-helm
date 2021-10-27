@@ -30,12 +30,9 @@ jobs:
       run: |
         export AWS_ROLE_ARN=$AWS_PIPELINE_ROLE
         export AWS_WEB_IDENTITY_TOKEN_FILE=/tmp/awscreds
-        export AWS_DEFAULT_REGION=us-east-1
-
         echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
         echo AWS_ROLE_ARN=$AWS_ROLE_ARN >> $GITHUB_ENV
         echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
-
         curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL" | jq -r '.value' > $AWS_WEB_IDENTITY_TOKEN_FILE
 
     - run: aws sts get-caller-identity
@@ -44,6 +41,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
     - name: Build, tag, and push image to Amazon ECR
       env:
+        AWS_REGION: ${{ env.AWS_DEFAULT_REGION}}
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
