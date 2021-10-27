@@ -46,4 +46,4 @@ jobs:
     - name: Kubernetes deployment
       run: |
         aws eks update-kubeconfig --name $CLUSTER_NAME
-        IMAGE_TAG=${IMAGE_TAG} helmfile -e ${ENVIRONMENT} -f helm/nginx/helmfile.yaml apply
+        IMAGE_TAG=${IMAGE_TAG} REPOSITORY=${AWS_REGISTRY_URL}/${ECR_REPOSITORY} helmfile -e ${ENVIRONMENT} -f helm/nginx/helmfile.yaml apply

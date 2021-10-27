@@ -16,3 +16,5 @@ releases:
   set:
     - name: image.tag
       value: {{ requiredEnv "IMAGE_TAG" | quote }}
+    - name: image.repository
+      value: {{ requiredEnv "REPOSITORY" | quote }}
