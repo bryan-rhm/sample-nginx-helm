@@ -16,6 +16,9 @@ env:
 
 jobs:
   build-image:
+    permissions:
+      id-token: write
+      contents: read
     environment: dev
     runs-on: ubuntu-latest
     steps:
