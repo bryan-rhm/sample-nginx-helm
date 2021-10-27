@@ -1,15 +1,14 @@
-name:  Dev deployment
+name:  Staging deployment
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+  release:
+    types: [ prereleased ]
 
 env:
   REPO_NAME: ${{ github.event.repository.name }}
   IMAGE_TAG: ${{ github.sha }}
-  CLUSTER_NAME: "dev-k8s"
-  ENVIRONMENT: "dev"
+  CLUSTER_NAME: "staging-k8s"
+  ENVIRONMENT: "staging"
   ECR_REPOSITORY: "nginx"
   AWS_DEFAULT_REGION: "us-east-1"
   AWS_PIPELINE_ROLE: ${{ secrets.AWS_PIPELINE_ROLE }}
@@ -20,7 +19,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment: dev
+    environment: staging
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
